@@ -6,7 +6,7 @@ class ChatInputViewModel: ObservableObject {
     
     // message data
     @Published var messsage: String = ""
-    @Published var imageList: [UIImage] = []
+    @Published var imageList: [ImageElement] = []
 
     // InputLine representation
     @Published var recordingLocked = false

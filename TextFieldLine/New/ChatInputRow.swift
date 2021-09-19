@@ -11,6 +11,14 @@ struct ChatInputRow: View {
     // Recorder
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
+    var textFieldHeight: CGFloat {
+        var value = textViewHeight ?? minHeight
+        if chatInputViewModel.imageList.count > 0 {
+            value += 70
+        }
+        return value
+    }
+    
     var body: some View {
         HStack(spacing: 0) {
             
@@ -30,8 +38,9 @@ struct ChatInputRow: View {
             } else {
                 VStack {
                     Spacer(minLength: 0)
-                    
-                    ImagePickerControl()
+                    ImagePickerControl(imageSet: $chatInputViewModel.imageList)
+                        .padding([.top, .leading], 5)
+                        .animation(.easeInOut)
                 }
                 .padding(.bottom, 7)
             }
@@ -43,54 +52,36 @@ struct ChatInputRow: View {
                 Spacer()
             }
             
-            HStack(spacing: 5) {
-                if !chatInputViewModel.recording {
-                    WrappedTextView(text: $chatInputViewModel.messsage, textDidChange: textDidChange(_:))
-                        .frame(height: textViewHeight ?? minHeight, alignment: .center)
-                        .padding(.leading, 16)
+            VStack {
+                Spacer(minLength: 0)
+                if chatInputViewModel.imageList.count > 0 {
+                    ScrollView(.horizontal, showsIndicators: false, content: {
+                        HStack {
+                            ForEach(chatInputViewModel.imageList) { image in
+                                Image(uiImage: image.image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                            }
+                        }
+                    })
+                    .frame(height: 60)
+                    .padding(.horizontal, 10)
+                    .padding(.top, 5)
+                    
+                    Divider()
                 }
                 
-                VStack {
-                    Spacer(minLength: 0)
+                HStack(spacing: 5) {
+                    WrappedTextView(text: $chatInputViewModel.messsage, textDidChange: textDidChange(_:))
+                        .hideCursor(shouldHide: chatInputViewModel.recording && !chatInputViewModel.recordingLocked)
+                        .frame(height: textViewHeight ?? minHeight, alignment: .center)
+                        .padding(.leading, 16)
                     
-                    if chatInputViewModel.messsage.isEmpty {
-                        
-                        if chatInputViewModel.recordingLocked {
-                            Button(action: chatInputViewModel.stopButtonTapped, label: {
-                                Image(systemName: "stop.circle.fill")
-                                    .font(.title)
-                                    .animation(.easeInOut)
-                                    .foregroundColor(.red)
-                                    .transition(.opacity)
-                                    .padding(.trailing, 2)
-                            })
-
-                        } else {
-                            Image(systemName: "waveform.circle")
-                                .font(.title)
-                                .animation(.easeInOut)
-                                .gesture(chatInputViewModel.mainGesture())
-                                .foregroundColor(chatInputViewModel.recording ? .red : .black)
-                                .opacity(chatInputViewModel.gestureActive ? 0.7 : 1)
-                                .scaleEffect(chatInputViewModel.gestureActive ? 0.8 : 1)
-                                .transition(.opacity)
-                                .padding(.trailing, 2)
-                        }
-                        
-                    } else {
-                        Button(action: {sendMessage()}, label: {
-                            Image(systemName: "paperplane.circle.fill")
-                                .font(.title)
-                                .animation(.easeInOut)
-                                .foregroundColor(.black)
-                                .transition(.opacity)
-                        })
-                        .padding(.trailing, 2)
-                    }
+                    SendButton(chatInputViewModel: self.chatInputViewModel)
                 }
-                .padding(.bottom, 2)
             }
-            .frame(height: textViewHeight ?? minHeight, alignment: .center)
+            .frame(height: textFieldHeight, alignment: .center)
             .overlay(RoundedRectangle(cornerRadius: 20)
                         .strokeBorder(lineWidth: 1.5)
                         .foregroundColor(chatInputViewModel.recording ? .clear : .black))
@@ -99,8 +90,8 @@ struct ChatInputRow: View {
             .padding(.trailing, 10)
             
         }
-        .frame(height: (textViewHeight ?? minHeight) + 10, alignment: .center)
-        .background(Color.secondary
+        .frame(height: textFieldHeight + 10, alignment: .center)
+        .background(Color.white
                         .edgesIgnoringSafeArea(.bottom))
     }
     

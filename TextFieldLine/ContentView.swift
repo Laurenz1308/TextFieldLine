@@ -16,7 +16,9 @@ struct ContentView: View {
                     MessageRow(message: message)
                 }
             })
-            .disabled(chatInputViewModel.recording)
+            .onAppear {
+                UIScrollView.appearance().keyboardDismissMode = .interactive
+            }
             
             
             if chatInputViewModel.recording {
@@ -67,7 +69,7 @@ struct ContentView: View {
                         .padding(.horizontal, 2)
                         .overlay(RoundedRectangle(cornerRadius: 20)
                                     .strokeBorder(lineWidth: 1.5)
-                                .foregroundColor(.black))
+                                    .foregroundColor(.black))
                     }
                     .padding(.top, 5)
                     .padding(.horizontal, 10)
@@ -75,12 +77,13 @@ struct ContentView: View {
                     .background(Color.secondary
                                     .edgesIgnoringSafeArea(.bottom))
                 }
-            } else {
-                VStack {
-                    Spacer()
-                    ChatInputRow(chatInputViewModel: chatInputViewModel)
-                }
             }
+            
+            VStack {
+                Spacer(minLength: 0)
+                ChatInputRow(chatInputViewModel: chatInputViewModel)
+            }
+            .offset(x: chatInputViewModel.showPlayer ? UIScreen.main.bounds.size.width : 0)
             
         }
     }

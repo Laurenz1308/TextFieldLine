@@ -3,6 +3,8 @@ import SwiftUI
 struct ImagePickerControl: View {
     
     @State var selected = false
+    @State var isAnimated = false
+    @Binding var imageSet: [ImageElement]
     
     @Namespace var buttonSlide
     
@@ -15,19 +17,20 @@ struct ImagePickerControl: View {
                         .font(.title)
                         .animation(.easeInOut)
                         .foregroundColor(.black)
+                        .padding(.leading, 5)
                 })
             } else {
                 ZStack {
                     Image(systemName: "photo.on.rectangle.angled")
                         .font(.title2)
-                        .animation(.easeInOut)
+                        .animation(isAnimated ? .easeIn : .none)
                         .foregroundColor(.clear)
                         .matchedGeometryEffect(id: "ID2", in: buttonSlide)
                     
                     Button(action: selectAction, label: {
                         Image(systemName: "camera.circle.fill")
                             .font(.title)
-                            .animation(.easeInOut)
+                            .animation(isAnimated ? .easeIn : .none)
                             .foregroundColor(.black)
                     })
                     .matchedGeometryEffect(id: "ID", in: buttonSlide)
@@ -35,15 +38,15 @@ struct ImagePickerControl: View {
             }
             
             if selected {
-                Button(action: {}, label: {
+                Button(action: addImage, label: {
                     Image(systemName: "camera.circle.fill")
                         .font(.title)
-                        .animation(.easeInOut)
+                        .animation(isAnimated ? .easeInOut : .none)
                         .foregroundColor(.black)
                 })
                     .matchedGeometryEffect(id: "ID", in: buttonSlide)
                 
-                Button(action: {}, label: {
+                Button(action: addImage, label: {
                     Image(systemName: "photo.on.rectangle.angled")
                         .font(.title2)
                         .animation(.easeIn(duration: 0.1))
@@ -54,7 +57,7 @@ struct ImagePickerControl: View {
             }
             
         }
-        .animation(.easeOut)
+        .animation(isAnimated ? .easeOut : .none)
         .overlay(RoundedRectangle(cornerRadius: 20)
                     .strokeBorder(lineWidth: 1.5)
                     .foregroundColor(selected ? .black : .clear))
@@ -64,8 +67,17 @@ struct ImagePickerControl: View {
     }
     
     private func selectAction() {
+        isAnimated = true
         withAnimation {
             selected.toggle()
+        }
+        isAnimated = false
+    }
+    
+    private func addImage() {
+        if imageSet.count < 6 {
+            guard let image = UIImage(named: "Apple-Logo") else { return }
+            imageSet.append(ImageElement(image: image))
         }
     }
     
@@ -74,7 +86,7 @@ struct ImagePickerControl: View {
 struct ImagePickerControl_Previews: PreviewProvider {
     static var previews: some View {
         HStack {
-            ImagePickerControl()
+            ImagePickerControl(imageSet: .constant([]))
                 .padding(.leading, 10)
             Spacer()
         }

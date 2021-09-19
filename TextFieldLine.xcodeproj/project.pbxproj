@@ -22,6 +22,8 @@
 		8A0DF29526ECC56B007E01B9 /* KeyboardResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0DF29426ECC56B007E01B9 /* KeyboardResponder.swift */; };
 		8A0DF29726EDF7D3007E01B9 /* InputRowAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0DF29626EDF7D3007E01B9 /* InputRowAudioPlayer.swift */; };
 		8A0DF29B26EE15E3007E01B9 /* ImagePickerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0DF29A26EE15E3007E01B9 /* ImagePickerControl.swift */; };
+		8A0DF2A526F0F17D007E01B9 /* SendButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0DF2A426F0F17D007E01B9 /* SendButton.swift */; };
+		8A0DF2AD26F36EAA007E01B9 /* ImageElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0DF2AC26F36EAA007E01B9 /* ImageElement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		8A0DF29426ECC56B007E01B9 /* KeyboardResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
 		8A0DF29626EDF7D3007E01B9 /* InputRowAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputRowAudioPlayer.swift; sourceTree = "<group>"; };
 		8A0DF29A26EE15E3007E01B9 /* ImagePickerControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerControl.swift; sourceTree = "<group>"; };
+		8A0DF2A426F0F17D007E01B9 /* SendButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendButton.swift; sourceTree = "<group>"; };
+		8A0DF2AC26F36EAA007E01B9 /* ImageElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageElement.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 				8A0DF28A26ECB198007E01B9 /* ChatInputViewModel.swift */,
 				8A0DF28826EB64C3007E01B9 /* WrappedTextView.swift */,
 				8A0DF29A26EE15E3007E01B9 /* ImagePickerControl.swift */,
+				8A0DF2A426F0F17D007E01B9 /* SendButton.swift */,
+				8A0DF2AC26F36EAA007E01B9 /* ImageElement.swift */,
 			);
 			path = New;
 			sourceTree = "<group>";
@@ -194,7 +200,9 @@
 				8A0DF28926EB64C3007E01B9 /* WrappedTextView.swift in Sources */,
 				8A0DF28B26ECB198007E01B9 /* ChatInputViewModel.swift in Sources */,
 				8A0DF28526EB5EE1007E01B9 /* MessageRow.swift in Sources */,
+				8A0DF2A526F0F17D007E01B9 /* SendButton.swift in Sources */,
 				8A0DF29726EDF7D3007E01B9 /* InputRowAudioPlayer.swift in Sources */,
+				8A0DF2AD26F36EAA007E01B9 /* ImageElement.swift in Sources */,
 				8A0DF28F26ECB781007E01B9 /* ShimmerText.swift in Sources */,
 				8A0DF29326ECC479007E01B9 /* ChatInputRow.swift in Sources */,
 				8A0DF29126ECBB4F007E01B9 /* PulsatingMic.swift in Sources */,

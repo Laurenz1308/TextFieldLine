@@ -5,6 +5,7 @@ struct WrappedTextView: UIViewRepresentable {
 
     @Binding var text: String
     let textDidChange: (UITextView) -> Void
+    var cursorColor = UIColor.blue
 
     func makeUIView(context: Context) -> UITextView {
         let view = UITextView()
@@ -12,11 +13,13 @@ struct WrappedTextView: UIViewRepresentable {
         view.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
         view.backgroundColor = .white
         view.delegate = context.coordinator
+        view.tintColor = cursorColor
         return view
     }
 
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.text = self.text
+        uiView.tintColor = cursorColor
         DispatchQueue.main.async {
             self.textDidChange(uiView)
         }
@@ -24,6 +27,16 @@ struct WrappedTextView: UIViewRepresentable {
 
     func makeCoordinator() -> Coordinator {
         return Coordinator(text: $text, textDidChange: textDidChange)
+    }
+    
+    func hideCursor(shouldHide: Bool) -> WrappedTextView {
+        var view = self
+        if shouldHide {
+            view.cursorColor = .clear
+        } else {
+            view.cursorColor = .blue
+        }
+        return view
     }
 
     class Coordinator: NSObject, UITextViewDelegate {
